@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAMO Cancer Care Foundation</title>
+<meta name="description" content="NAMO Cancer Care Foundation — bringing holistic cancer care within reach of every citizen, community by community.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap">
+<style>
+/* =============================================================
+   Karkinos Design System tokens (colors_and_type.css)
+   Inlined so this page is fully self-contained.
+   ============================================================= */
+:root {
+  --brand-purple:        #7D2C7D;
+  --brand-lavender:      #B174AE;
+  --brand-purple-tint:   #FBF5FC;
+  --brand-yellow:        #FFDF61;
+  --brand-cream:         #FFF9DE;
+  --brand-blue-deep:     #0F4391;
+  --brand-blue:          #1D57AE;
+  --brand-blue-tint:     #E8FAFF;
+  --brand-grey:          #ECECEC;
+
+  --grey-50:  #FAFAFA;
+  --grey-100: #F4F4F4;
+  --grey-200: #ECECEC;
+  --grey-300: #D9D9D9;
+  --grey-400: #B8B8B8;
+  --grey-500: #8A8A8A;
+  --grey-600: #5C5C5C;
+  --grey-700: #3D3D3D;
+  --grey-800: #262626;
+  --grey-900: #141414;
+
+  --bg-page:     #FFFFFF;
+  --bg-subtle:   var(--brand-purple-tint);
+  --bg-muted:    var(--grey-100);
+  --bg-emphasis: var(--brand-purple);
+  --bg-callout:  var(--brand-cream);
+  --bg-info:     var(--brand-blue-tint);
+
+  --fg-1:          var(--grey-900);
+  --fg-2:          var(--grey-700);
+  --fg-3:          var(--grey-500);
+  --fg-inverse:    #FFFFFF;
+  --fg-brand:      var(--brand-purple);
+  --fg-link:       var(--brand-blue);
+  --fg-link-hover: var(--brand-blue-deep);
+
+  --border-subtle:  var(--grey-200);
+  --border-default: var(--grey-300);
+  --border-strong:  var(--grey-400);
+  --border-brand:   var(--brand-purple);
+
+  --font-sans:    'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+
+  --fs-xs: 0.75rem;  --fs-sm: 0.875rem; --fs-base: 1rem;  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem; --fs-xl: 1.75rem;  --fs-2xl: 2.25rem; --fs-3xl: 3rem;
+  --fs-4xl: 3.75rem; --fs-5xl: 4.75rem;
+
+  --lh-tight: 1.1; --lh-snug: 1.25; --lh-normal: 1.45; --lh-relaxed: 1.6;
+  --tracking-tight: -0.015em; --tracking-eyebrow: 0.12em;
+
+  --radius-md: 8px; --radius-lg: 12px; --radius-xl: 20px; --radius-pill: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(125,44,125,0.06);
+  --shadow-sm: 0 2px 4px rgba(125,44,125,0.07), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 6px 16px rgba(125,44,125,0.10), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 18px 40px rgba(125,44,125,0.14), 0 4px 10px rgba(0,0,0,0.04);
+  --shadow-focus: 0 0 0 3px rgba(177,116,174,0.35);
+
+  --ease-standard: cubic-bezier(0.2,0.0,0.1,1);
+  --duration-fast: 120ms;
+}
+
+/* ---------- Base type rules from the DS that affect rendering ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--fg-1);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+/* Brand page-title treatment: h1 is set uppercase in the Karkinos guidelines. */
+h1 { text-transform: uppercase; }
+
+a {
+  color: var(--fg-link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+a:hover { color: var(--fg-link-hover); border-bottom-color: currentColor; }
+
+/* ---------- App chrome / routing ---------- */
+@keyframes namoFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.namo-page { animation: namoFade .36s var(--ease-standard); }
+section[id] { scroll-margin-top: 88px; }
+
+.namo-header {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(255,255,255,0.96);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: none;
+  transition: box-shadow .2s var(--ease-standard);
+}
+.namo-header.is-scrolled { box-shadow: var(--shadow-sm); }
+
+.namo-nav-row { display: flex; align-items: center; gap: 22px; }
+@media (max-width: 880px) { .namo-nav-row { gap: 12px; flex-wrap: wrap; justify-content: flex-end; } }
+
+.namo-nav-link {
+  font-family: var(--font-sans); font-weight: 500; font-size: 14px;
+  background: none; cursor: pointer; padding: 6px 2px; white-space: nowrap;
+  color: var(--fg-1); border: none; border-bottom: 2px solid transparent;
+}
+.namo-nav-link.is-active { color: var(--brand-purple); border-bottom-color: var(--brand-purple); }
+
+.namo-route { display: none; }
+.namo-route.is-active { display: block; }
+
+/* ---------- Interactive states (mirrors the prototype's hover/focus) ---------- */
+.h-darken:hover    { background: #5d1f5d !important; }
+.h-bordercta:hover { border-color: var(--brand-purple) !important; }
+.h-purple:hover    { color: var(--brand-purple) !important; }
+.h-white:hover     { color: #fff !important; }
+.f-input:focus     { outline: none; border-color: var(--brand-purple); box-shadow: var(--shadow-focus); }
+
+/* ---------- Empty image slot (content-pending placeholder) ---------- */
+.namo-slot {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; text-align: center; padding: 12px;
+  background: rgba(0,0,0,0.04);
+  color: rgba(0,0,0,0.55);
+  font: 13px/1.35 var(--font-sans);
+}
+.namo-slot::before {
+  content: ""; position: absolute; inset: 0;
+  border: 1.5px dashed rgba(0,0,0,0.25);
+  border-radius: inherit; pointer-events: none;
+}
+.namo-slot svg { opacity: 0.75; }
+
+/* ---------- Non-destructive responsive collapse (desktop appearance unchanged) ---------- */
+@media (min-width: 761px) and (max-width: 1000px) {
+  .namo-grid-4, .namo-grid-footer { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 760px) {
+  .namo-grid-2, .namo-grid-3, .namo-grid-4,
+  .namo-grid-split, .namo-grid-footer { grid-template-columns: 1fr !important; }
+  .namo-section { padding-left: 22px !important; padding-right: 22px !important; }
+  .namo-header > div { padding-left: 22px !important; padding-right: 22px !important; }
+}
+</style>
+</head>
+<body>
+
+<div style="font-family:var(--font-sans); color:var(--fg-1); background:#fff;">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="namo-header">
+    <div style="max-width:1200px; margin:0 auto; padding:12px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <button onclick="NAMO.go('home')" style="display:flex; align-items:center; gap:12px; border:none; background:none; padding:0; cursor:pointer; text-align:left;">
+        <img src="https://nbpatil0.github.io/namo/namo_logo_transparent.png" alt="NCCF" style="height:42px; width:auto; display:block;">
+        <span style="font-weight:700; font-size:15px; line-height:1.2; color:var(--brand-purple); letter-spacing:-0.01em;">NAMO Cancer Care<br>Foundation</span>
+      </button>
+      <nav class="namo-nav-row" aria-label="Primary">
+        <button class="namo-nav-link" data-nav="home" onclick="NAMO.go('home')">Home</button>
+        <button class="namo-nav-link" data-nav="about" onclick="NAMO.go('about')">About</button>
+        <button class="namo-nav-link" data-nav="vision" onclick="NAMO.go('vision')">Vision</button>
+        <button class="namo-nav-link" data-nav="team" onclick="NAMO.go('team')">Team</button>
+        <button class="namo-nav-link" data-nav="funders" onclick="NAMO.go('funders')">Funders &amp; Partners</button>
+        <button onclick="NAMO.go('contact')" class="h-darken" style="display:inline-flex; align-items:center; font-family:var(--font-sans); font-weight:600; font-size:14px; color:#fff; background:var(--brand-purple); padding:10px 20px; border-radius:8px; border:none; cursor:pointer;">Contact</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- ============================== HOME ================================= -->
+  <!-- ===================================================================== -->
+  <div class="namo-route" data-route="home">
+  <div class="namo-page">
+
+  <!-- HERO -->
+  <section id="top" class="namo-section" style="position:relative; background:var(--brand-purple-tint); border-bottom:1px solid var(--border-subtle); min-height:54vh; display:flex; align-items:center; overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute; top:-120px; right:-120px; width:420px; height:420px; border-radius:999px; background:radial-gradient(circle at center, rgba(177,116,174,0.18), rgba(177,116,174,0) 70%);"></div>
+    <div style="position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:64px 40px; width:100%;">
+      <div style="max-width:780px;">
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-purple); margin-bottom:18px;">NAMO — National Mission for Oncology</div>
+        <h1 style="font-weight:700; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.02em; color:var(--fg-1); margin:0 0 22px;">Bringing holistic cancer care within reach.</h1>
+        <p style="font-size:clamp(17px,2vw,21px); line-height:1.55; color:var(--fg-2); max-width:660px; margin:0 0 14px;">Our vision: holistic cancer care within reach of <strong style="color:var(--brand-purple); font-weight:700;">15 crore citizens by 2030</strong> — through awareness, early detection, screening and cure.</p>
+        <p style="font-size:15px; line-height:1.55; color:var(--fg-3); max-width:620px; margin:0 0 34px;">A pan-India effort, building cancer care community by community — from the heartland to every corner of the country.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <button onclick="NAMO.go('vision')" class="h-darken" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-sans); font-weight:600; font-size:15px; color:#fff; background:var(--brand-purple); padding:15px 26px; border-radius:8px; border:none; cursor:pointer;">
+            Explore our vision
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+          <a href="#plan" class="h-bordercta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-sans); font-weight:600; font-size:15px; color:var(--brand-purple); background:#fff; padding:15px 26px; border-radius:8px; border:1px solid var(--border-default);">See our plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section id="challenge" class="namo-section" style="background:#fff; padding:72px 40px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-purple); margin-bottom:14px;">The Problem</div>
+      <h2 style="font-weight:700; font-size:clamp(26px,3.4vw,40px); line-height:1.12; letter-spacing:-0.01em; color:var(--fg-1); margin:0 0 16px; max-width:22ch;">Cancer in India is rising fast, found too late, and out of reach for most people.</h2>
+      <p style="font-size:17px; line-height:1.6; color:var(--fg-2); max-width:920px; margin:0 0 40px;">Cancer now touches nearly every Indian family. But three problems stand in the way of beating it: the disease is growing faster than our ability to fight it, most cases are caught too late to cure, and the hospitals that can treat it are crowded into a few big cities — far from where most people live.</p>
+
+      <div class="namo-grid-3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:28px; box-shadow:var(--shadow-sm);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <div style="flex:none; width:40px; height:40px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"></path><path d="M16 7h6v6"></path></svg>
+            </div>
+            <div style="font-weight:700; font-size:16px; color:var(--fg-1);">A growing burden</div>
+          </div>
+          <div style="font-weight:800; font-size:40px; line-height:1; color:var(--brand-purple); margin-bottom:12px;">1.9 million</div>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">new cancer cases every year — and 1 in 9 Indians will face cancer in their lifetime.</p>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:28px; box-shadow:var(--shadow-sm);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <div style="flex:none; width:40px; height:40px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div style="font-weight:700; font-size:16px; color:var(--fg-1);">Caught too late</div>
+          </div>
+          <div style="font-weight:800; font-size:40px; line-height:1; color:var(--brand-purple); margin-bottom:12px;">7 in 10</div>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">cases are found at an advanced stage. Caught early, 9 in 10 patients survive — caught late, only 1 in 7 do.</p>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:28px; box-shadow:var(--shadow-sm);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <div style="flex:none; width:40px; height:40px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 12-8 12s-8-5-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div style="font-weight:700; font-size:16px; color:var(--fg-1);">Out of reach</div>
+          </div>
+          <div style="font-weight:800; font-size:40px; line-height:1; color:var(--brand-purple); margin-bottom:12px;">95%</div>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">of cancer centres are in cities, while 7 in 10 Indians live in rural areas — where death rates are twice as high.</p>
+        </div>
+      </div>
+
+      <div class="namo-grid-split" style="margin-top:24px; background:var(--brand-purple); color:#fff; border-radius:20px; padding:42px 44px; display:grid; grid-template-columns:1.4fr 1fr; gap:40px; align-items:center;">
+        <div>
+          <div style="font-weight:600; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.82); margin-bottom:12px;">Our Solution · NAMO-CAN</div>
+          <h3 style="font-weight:700; font-size:clamp(20px,2.4vw,28px); line-height:1.2; margin:0 0 14px;">A network of cancer centres that brings care closer to home</h3>
+          <p style="font-size:15px; line-height:1.6; color:rgba(255,255,255,0.85); margin:0; max-width:62ch;">The National Mission of Oncology – Cancer Access Network (NAMO-CAN) is building a connected network of our own cancer centres across the country — so that no one has to travel far or wait long for care.</p>
+        </div>
+        <div class="namo-grid-4" style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px;">
+          <div style="text-align:center;">
+            <div style="width:52px; height:52px; margin:0 auto 10px; border-radius:999px; background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+            </div>
+            <div style="font-weight:700; font-size:14px;">Awareness</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.7); margin-top:2px;">&amp; early detection</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:52px; height:52px; margin:0 auto 10px; border-radius:999px; background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
+            </div>
+            <div style="font-weight:700; font-size:14px;">Diagnosis</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.7); margin-top:2px;">close to home</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:52px; height:52px; margin:0 auto 10px; border-radius:999px; background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"></path></svg>
+            </div>
+            <div style="font-weight:700; font-size:14px;">Treatment</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.7); margin-top:2px;">&amp; support</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:52px; height:52px; margin:0 auto 10px; border-radius:999px; background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+            </div>
+            <div style="font-weight:700; font-size:14px;">Research</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.7); margin-top:2px;">for better care</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:12px; color:var(--fg-3); margin:20px 0 0;">Sources: EY — Call for Action (2022); ICMR Indian Cancer Registry; WHO; American Cancer Society. <span style="color:var(--brand-purple); font-weight:600;">Verify before publishing.</span></p>
+    </div>
+  </section>
+
+  <!-- OUR PLAN -->
+  <section id="plan" class="namo-section" style="background:var(--brand-purple-tint); padding:80px 40px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-purple); margin-bottom:14px;">Our Plan</div>
+      <h2 style="font-weight:700; font-size:clamp(28px,3.4vw,40px); line-height:1.12; letter-spacing:-0.01em; color:var(--fg-1); margin:0 0 16px;">Four ways we reach people</h2>
+      <p style="font-size:18px; line-height:1.55; color:var(--fg-2); max-width:680px; margin:0 0 48px;">A simple, connected path — from spreading awareness, to finding cancer early, to treating it close to home, to staying with families through recovery.</p>
+
+      <div class="namo-grid-4" style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:30px 26px; box-shadow:var(--shadow-sm);">
+          <div style="width:46px; height:46px; border-radius:10px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3 style="font-weight:700; font-size:19px; line-height:1.25; color:var(--fg-1); margin:0 0 10px;">Awareness</h3>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">Community ambassadors, youth volunteers and theatre-based campaigns that bring cancer awareness into everyday life, district by district.</p>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:30px 26px; box-shadow:var(--shadow-sm);">
+          <div style="width:46px; height:46px; border-radius:10px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-8 8.5-4.5-1-8-3.5-8-8.5V5l8-3 8 3Z"></path></svg>
+          </div>
+          <h3 style="font-weight:700; font-size:19px; line-height:1.25; color:var(--fg-1); margin:0 0 10px;">Early Detection &amp; Screening</h3>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">Regular screening close to where people live, so cancers are found early — when treatment works best and costs least.</p>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:30px 26px; box-shadow:var(--shadow-sm);">
+          <div style="width:46px; height:46px; border-radius:10px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v2"></path><path d="M5 2v2"></path><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg>
+          </div>
+          <h3 style="font-weight:700; font-size:19px; line-height:1.25; color:var(--fg-1); margin:0 0 10px;">A Network of Cancer Centres</h3>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">Connected hospitals and cancer centres so quality treatment is available closer to home, not only in big cities.</p>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:30px 26px; box-shadow:var(--shadow-sm);">
+          <div style="width:46px; height:46px; border-radius:10px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0L12 5.34l-.77-.77a5.4 5.4 0 0 0-7.65 7.65l8.42 8.42 8.42-8.42a5.4 5.4 0 0 0 0-7.65Z"></path></svg>
+          </div>
+          <h3 style="font-weight:700; font-size:19px; line-height:1.25; color:var(--fg-1); margin:0 0 10px;">Community &amp; Follow-up Care</h3>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">Staying with patients and families through treatment and recovery, with local volunteers who keep care going.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; display:flex; align-items:flex-start; gap:18px; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:12px; padding:24px 28px;">
+        <div style="flex:none; width:44px; height:44px; border-radius:999px; background:#fff; color:var(--brand-purple); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-xs);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <div>
+          <div style="font-weight:700; font-size:16px; color:var(--fg-1); margin:0 0 4px;">Citizen and youth participation</div>
+          <p style="font-size:15px; line-height:1.55; color:var(--fg-2); margin:0;">Every ambassador and youth volunteer we train gains a skill and a role in their community — so the mission also builds local livelihoods as it grows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 1 -->
+  <section id="phase" class="namo-section" style="background:#fff; padding:80px 40px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-purple); margin-bottom:14px;">Phase 1</div>
+      <h2 style="font-weight:700; font-size:clamp(28px,3.4vw,40px); line-height:1.12; letter-spacing:-0.01em; color:var(--fg-1); margin:0 0 16px;">Starting in seven historic cities</h2>
+      <p style="font-size:18px; line-height:1.55; color:var(--fg-2); max-width:700px; margin:0 0 44px;">Phase 1 begins in seven cities across India's heartland — chosen for their reach and connection to the communities around them. More locations will join as the mission expands.</p>
+
+      <div class="namo-grid-4" style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/ayodhya.png" alt="Ayodhya" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Ayodhya</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Uttar Pradesh</div></div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/mathura.png" alt="Mathura" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Mathura</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Uttar Pradesh</div></div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/haridwar.png" alt="Haridwar" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Haridwar</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Uttarakhand</div></div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/varanasi.png" alt="Varanasi" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Varanasi</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Uttar Pradesh</div></div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/kanchipuram.png" alt="Kanchipuram" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Kanchipuram</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Tamil Nadu</div></div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/ujjain.png" alt="Ujjain" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Ujjain</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Madhya Pradesh</div></div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
+          <img src="https://nbpatil0.github.io/namo/dwarka.png" alt="Dwarka" style="width:100%; height:170px; display:block; object-fit:cover;">
+          <div style="padding:16px 18px;"><div style="font-weight:700; font-size:17px; color:var(--fg-1);">Dwarka</div><div style="font-size:13px; color:var(--fg-3); margin-top:3px;">Gujarat</div></div>
+        </div>
+        <div style="border:1px dashed var(--border-default); border-radius:12px; display:flex; align-items:center; justify-content:center; text-align:center; padding:24px; min-height:170px;">
+          <div style="color:var(--fg-3); font-size:14px; line-height:1.5;">More cities<br>joining soon</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT BAND -->
+  <section class="namo-section" style="background:var(--brand-purple-tint); padding:72px 40px;">
+    <div class="namo-grid-split" style="max-width:1000px; margin:0 auto; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:20px; padding:48px; display:grid; grid-template-columns:1.3fr auto; gap:40px; align-items:center;">
+      <div>
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-purple); margin-bottom:14px;">Get in Touch</div>
+        <h2 style="font-weight:700; font-size:clamp(24px,2.8vw,32px); line-height:1.15; color:var(--fg-1); margin:0 0 12px;">Want to get involved or learn more?</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--fg-2); margin:0;">Write to us at <a href="mailto:info@namoccf.org" style="color:var(--brand-purple); font-weight:600;">info@namoccf.org</a> &middot; Ahmedabad, Gujarat, India.</p>
+      </div>
+      <button onclick="NAMO.go('contact')" class="h-darken" style="justify-self:start; display:inline-flex; align-items:center; gap:8px; font-family:var(--font-sans); font-weight:600; font-size:15px; color:#fff; background:var(--brand-purple); padding:15px 28px; border-radius:8px; border:none; cursor:pointer;">Contact us</button>
+    </div>
+  </section>
+
+  </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- ============================== ABOUT =============================== -->
+  <!-- ===================================================================== -->
+  <div class="namo-route" data-route="about">
+  <div class="namo-page">
+    <section class="namo-section" style="background:var(--brand-purple); color:#fff;">
+      <div style="max-width:1200px; margin:0 auto; padding:60px 40px 52px;">
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.82); margin-bottom:14px;">About</div>
+        <h1 style="font-weight:700; font-size:clamp(30px,4.4vw,48px); line-height:1.08; letter-spacing:-0.02em; margin:0 0 14px;">About the Foundation</h1>
+        <p style="font-size:18px; line-height:1.55; color:rgba(255,255,255,0.86); max-width:60ch; margin:0;">How NAMO Cancer Care Foundation began, and the idea that holds it together.</p>
+      </div>
+    </section>
+    <section class="namo-section" style="background:#fff; padding:72px 40px;">
+      <div style="max-width:760px; margin:0 auto;">
+        <div style="display:flex; align-items:flex-start; gap:14px; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:12px; padding:16px 20px; margin-bottom:32px;">
+          <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; background:var(--brand-purple); border-radius:999px; padding:3px 10px; margin-top:2px;">Draft</span>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">Origin story below is a structured placeholder. Replace with the confirmed genesis once the team finalises the wording.</p>
+        </div>
+        <p style="font-size:20px; line-height:1.5; color:var(--fg-1); font-weight:500; margin:0 0 28px;">NAMO Cancer Care Foundation grew from a simple conviction: that no one in India should face cancer late, alone, or far from help.</p>
+
+        <div class="namo-slot" style="width:100%; height:300px; display:flex; border-radius:12px; overflow:hidden; border:1px solid var(--border-subtle);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg>
+          <span>Drop a community / outreach photo</span>
+        </div>
+
+        <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:36px 0 10px;">Where it started</h3>
+        <p style="font-size:16px; line-height:1.65; color:var(--fg-2); margin:0 0 22px;">[Placeholder] A short, plain account of how the mission came together — the people who started it, the gap they saw, and why a cooperative approach across the country made sense.</p>
+
+        <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:0 0 10px;">What we believe</h3>
+        <p style="font-size:16px; line-height:1.65; color:var(--fg-2); margin:0 0 22px;">Cancer care should follow the citizen, not the other way round. That means meeting people early, close to home, and staying with them through treatment and recovery — regardless of income or location.</p>
+
+        <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:0 0 10px;">A note from our Chairman</h3>
+        <div style="display:flex; align-items:flex-start; gap:14px; background:var(--brand-purple-tint); border:1px solid var(--border-subtle); border-radius:12px; padding:16px 20px;">
+          <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--brand-purple); background:#fff; border:1px solid var(--border-subtle); border-radius:999px; padding:3px 10px; margin-top:2px;">Pending</span>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;"><strong style="color:var(--fg-1);">Optional.</strong> A short note from the Chairman — to be included only once approved. No quote has been written or attributed.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- ============================== VISION ============================== -->
+  <!-- ===================================================================== -->
+  <div class="namo-route" data-route="vision">
+  <div class="namo-page">
+    <section class="namo-section" style="background:var(--brand-purple); color:#fff;">
+      <div style="max-width:1200px; margin:0 auto; padding:60px 40px 52px;">
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.82); margin-bottom:14px;">Vision</div>
+        <h1 style="font-weight:700; font-size:clamp(30px,4.4vw,48px); line-height:1.08; letter-spacing:-0.02em; margin:0 0 14px;">Our vision</h1>
+        <p style="font-size:18px; line-height:1.55; color:rgba(255,255,255,0.86); max-width:60ch; margin:0;">Where we are headed, and the future we are working towards — community by community.</p>
+      </div>
+    </section>
+    <section class="namo-section" style="background:#fff; padding:80px 40px;">
+      <div style="max-width:920px; margin:0 auto; text-align:center;">
+        <p style="font-weight:700; font-size:clamp(24px,3.4vw,40px); line-height:1.25; letter-spacing:-0.01em; color:var(--fg-1); margin:0 0 24px;">Every Indian — wherever they live, whatever they earn — should be able to find quality cancer care close to home.</p>
+        <p style="font-size:18px; line-height:1.6; color:var(--fg-2); margin:0; max-width:680px; margin-left:auto; margin-right:auto;">Our vision is holistic cancer care within reach of <strong style="color:var(--brand-purple);">15 crore citizens by 2030</strong>, built community by community, in step with India's goal of a cancer-free future.</p>
+      </div>
+    </section>
+    <section class="namo-section" style="background:var(--brand-purple-tint); padding:72px 40px;">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div class="namo-grid-3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:28px; box-shadow:var(--shadow-sm);">
+            <div style="font-weight:800; font-size:34px; color:var(--brand-purple); line-height:1; margin-bottom:10px;">Early</div>
+            <p style="font-size:15px; line-height:1.55; color:var(--fg-2); margin:0;">Caught early, when treatment is most effective — through awareness and routine screening close to home.</p>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:28px; box-shadow:var(--shadow-sm);">
+            <div style="font-weight:800; font-size:34px; color:var(--brand-purple); line-height:1; margin-bottom:10px;">Near</div>
+            <p style="font-size:15px; line-height:1.55; color:var(--fg-2); margin:0;">Treated with dignity at a connected network of centres, so quality care is never far from where people live.</p>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:28px; box-shadow:var(--shadow-sm);">
+            <div style="font-weight:800; font-size:34px; color:var(--brand-purple); line-height:1; margin-bottom:10px;">Together</div>
+            <p style="font-size:15px; line-height:1.55; color:var(--fg-2); margin:0;">Supported at every stage by local volunteers and ambassadors who keep care going through recovery.</p>
+          </div>
+        </div>
+        <div style="margin-top:24px; display:flex; align-items:flex-start; gap:18px; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:12px; padding:24px 28px;">
+          <div style="flex:none; width:44px; height:44px; border-radius:999px; background:#fff; color:var(--brand-purple); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-xs);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div>
+            <div style="font-weight:700; font-size:16px; color:var(--fg-1); margin:0 0 4px;">An added impact: citizen and youth participation</div>
+            <p style="font-size:15px; line-height:1.55; color:var(--fg-2); margin:0;">Every ambassador and youth volunteer we train gains a skill and a role in their community — so the mission also builds local livelihoods as it grows.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- ============================== TEAM ================================ -->
+  <!-- ===================================================================== -->
+  <div class="namo-route" data-route="team">
+  <div class="namo-page">
+    <section class="namo-section" style="background:var(--brand-purple); color:#fff;">
+      <div style="max-width:1200px; margin:0 auto; padding:60px 40px 52px;">
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.82); margin-bottom:14px;">Team</div>
+        <h1 style="font-weight:700; font-size:clamp(30px,4.4vw,48px); line-height:1.08; letter-spacing:-0.02em; margin:0 0 14px;">Team &amp; Advisors</h1>
+        <p style="font-size:18px; line-height:1.55; color:rgba(255,255,255,0.86); max-width:60ch; margin:0;">The trustees, advisors and volunteers behind the mission.</p>
+      </div>
+    </section>
+    <section class="namo-section" style="background:#fff; padding:72px 40px;">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div style="display:flex; align-items:flex-start; gap:14px; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:12px; padding:16px 20px; margin-bottom:36px;">
+          <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; background:var(--brand-purple); border-radius:999px; padding:3px 10px; margin-top:2px;">Draft</span>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">Only names already shared are shown; bios, photos and remaining members are placeholders pending sign-off. Nothing here has been invented.</p>
+        </div>
+
+        <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:0 0 18px;">Trustees</h3>
+        <div class="namo-grid-3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:40px;">
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">V</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">Venkat</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Chairman</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Bio pending approval]</p>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--grey-200); color:var(--fg-3); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">?</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">[Name pending]</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Trustee</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Pending sign-off]</p>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--grey-200); color:var(--fg-3); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">?</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">[Name pending]</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Trustee</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Pending sign-off]</p>
+          </div>
+        </div>
+
+        <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:0 0 18px;">Advisors</h3>
+        <div class="namo-grid-3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:40px;">
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">B</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">Dr. Banerjee</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Advisor</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Bio pending approval]</p>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--grey-200); color:var(--fg-3); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">?</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">[Name pending]</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Advisor</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Pending sign-off]</p>
+          </div>
+        </div>
+
+        <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:0 0 18px;">Consultants &amp; active volunteers</h3>
+        <div class="namo-grid-3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">R</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">Rajesh</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Consultant / Volunteer</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Role description pending]</p>
+          </div>
+          <div style="background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:24px; box-shadow:var(--shadow-sm);">
+            <div style="width:54px; height:54px; border-radius:999px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; margin-bottom:14px;">N</div>
+            <div style="font-weight:700; font-size:17px; color:var(--fg-1);">Naveen</div>
+            <div style="font-size:13px; color:var(--brand-purple); font-weight:600; margin:2px 0 8px;">Consultant / Volunteer</div>
+            <p style="font-size:13px; color:var(--fg-3); margin:0;">[Role description pending]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- ======================= FUNDERS & PARTNERS ========================= -->
+  <!-- ===================================================================== -->
+  <div class="namo-route" data-route="funders">
+  <div class="namo-page">
+    <section class="namo-section" style="background:var(--brand-purple); color:#fff;">
+      <div style="max-width:1200px; margin:0 auto; padding:60px 40px 52px;">
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.82); margin-bottom:14px;">Funders &amp; Partners</div>
+        <h1 style="font-weight:700; font-size:clamp(30px,4.4vw,48px); line-height:1.08; letter-spacing:-0.02em; margin:0 0 14px;">Funders &amp; Partners</h1>
+        <p style="font-size:18px; line-height:1.55; color:rgba(255,255,255,0.86); max-width:60ch; margin:0;">The organisations standing with us as the mission grows.</p>
+      </div>
+    </section>
+    <section class="namo-section" style="background:#fff; padding:72px 40px;">
+      <div style="max-width:1100px; margin:0 auto;">
+        <div style="display:flex; align-items:flex-start; gap:14px; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:12px; padding:16px 20px; margin-bottom:36px;">
+          <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; background:var(--brand-purple); border-radius:999px; padding:3px 10px; margin-top:2px;">Placeholder</span>
+          <p style="font-size:14px; line-height:1.55; color:var(--fg-2); margin:0;">No logos or partnerships have been added yet — the slots below are empty placeholders. We will list funders and partners here as they come on board.</p>
+        </div>
+        <div class="namo-grid-4" style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+          <div class="namo-slot" style="width:100%; height:130px; border:1px solid var(--border-subtle); border-radius:12px; overflow:hidden;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L5 21"></path></svg><span>Partner logo</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- ============================= CONTACT ============================== -->
+  <!-- ===================================================================== -->
+  <div class="namo-route" data-route="contact">
+  <div class="namo-page">
+    <section class="namo-section" style="background:var(--brand-purple); color:#fff;">
+      <div style="max-width:1200px; margin:0 auto; padding:60px 40px 52px;">
+        <div style="font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.82); margin-bottom:14px;">Contact</div>
+        <h1 style="font-weight:700; font-size:clamp(30px,4.4vw,48px); line-height:1.08; letter-spacing:-0.02em; margin:0 0 14px;">Contact us</h1>
+        <p style="font-size:18px; line-height:1.55; color:rgba(255,255,255,0.86); max-width:62ch; margin:0;">For more on Project NAMO and the cooperative cancer-care network, reach out to the NAMO Cancer Care Foundation.</p>
+      </div>
+    </section>
+    <section class="namo-section" style="background:#fff; padding:72px 40px;">
+      <div class="namo-grid-2" style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;">
+        <div>
+          <h3 style="font-weight:700; font-size:22px; color:var(--fg-1); margin:0 0 22px;">Reach our team</h3>
+          <div style="display:flex; flex-direction:column; gap:18px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="flex:none; width:42px; height:42px; border-radius:10px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              </div>
+              <div><div style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--fg-3);">Email</div><a href="mailto:info@namoccf.org" class="h-purple" style="font-weight:600; font-size:16px; color:var(--fg-1);">info@namoccf.org</a></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="flex:none; width:42px; height:42px; border-radius:10px; background:var(--brand-purple-tint); color:var(--brand-purple); display:flex; align-items:center; justify-content:center;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 7-8 12-8 12s-8-5-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div><div style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--fg-3);">Location</div><div style="font-weight:600; font-size:16px; color:var(--fg-1);">Ahmedabad, Gujarat, India</div></div>
+            </div>
+          </div>
+
+          <h3 style="font-weight:700; font-size:18px; color:var(--fg-1); margin:36px 0 14px;">Legal &amp; NGO information</h3>
+          <div style="display:flex; align-items:flex-start; gap:14px; background:var(--brand-cream); border:1px solid var(--border-subtle); border-radius:12px; padding:14px 18px; margin-bottom:16px;">
+            <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; background:var(--brand-purple); border-radius:999px; padding:3px 10px; margin-top:1px;">Verify</span>
+            <p style="font-size:13px; line-height:1.5; color:var(--fg-2); margin:0;">Registration numbers below are placeholders. Confirm against the trust deed and certificates before publishing.</p>
+          </div>
+          <table style="width:100%; border-collapse:collapse; font-size:14px;">
+            <tbody>
+              <tr><td style="border:1px solid var(--border-subtle); padding:10px 14px; font-weight:600; width:42%; background:var(--grey-100);">Registered name</td><td style="border:1px solid var(--border-subtle); padding:10px 14px; color:var(--fg-2);">NAMO Cancer Care Foundation (NCCF)</td></tr>
+              <tr><td style="border:1px solid var(--border-subtle); padding:10px 14px; font-weight:600; background:var(--grey-100);">Entity type</td><td style="border:1px solid var(--border-subtle); padding:10px 14px; color:var(--fg-2);">Section 8 Company (not-for-profit), Companies Act, 2013</td></tr>
+              <tr><td style="border:1px solid var(--border-subtle); padding:10px 14px; font-weight:600; background:var(--grey-100);">Registered office</td><td style="border:1px solid var(--border-subtle); padding:10px 14px; color:var(--fg-2);">Ahmedabad, Gujarat, India</td></tr>
+              <tr><td style="border:1px solid var(--border-subtle); padding:10px 14px; font-weight:600; background:var(--grey-100);">CIN / Registration no.</td><td style="border:1px solid var(--border-subtle); padding:10px 14px; color:var(--fg-3);">[Pending]</td></tr>
+              <tr><td style="border:1px solid var(--border-subtle); padding:10px 14px; font-weight:600; background:var(--grey-100);">12A registration</td><td style="border:1px solid var(--border-subtle); padding:10px 14px; color:var(--fg-3);">[Pending]</td></tr>
+              <tr><td style="border:1px solid var(--border-subtle); padding:10px 14px; font-weight:600; background:var(--grey-100);">80G registration</td><td style="border:1px solid var(--border-subtle); padding:10px 14px; color:var(--fg-3);">[Pending — confirms tax-deductibility of donations]</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background:var(--brand-purple-tint); border:1px solid var(--border-subtle); border-radius:16px; padding:32px;">
+          <div style="display:flex; align-items:flex-start; gap:14px; background:#fff; border:1px solid var(--border-subtle); border-radius:12px; padding:14px 18px; margin-bottom:22px;">
+            <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--brand-purple); background:var(--brand-purple-tint); border-radius:999px; padding:3px 10px; margin-top:1px;">Prototype</span>
+            <p style="font-size:13px; line-height:1.5; color:var(--fg-2); margin:0;">This form is illustrative only — it is not connected to a backend.</p>
+          </div>
+          <div class="namo-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div><label for="namo-fn" style="display:block; font-size:13px; font-weight:600; color:var(--fg-1); margin-bottom:6px;">First name</label><input id="namo-fn" type="text" placeholder="Arjun" class="f-input" style="width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid var(--border-default); border-radius:8px; font-family:var(--font-sans); font-size:15px; background:#fff;"></div>
+            <div><label for="namo-ln" style="display:block; font-size:13px; font-weight:600; color:var(--fg-1); margin-bottom:6px;">Last name</label><input id="namo-ln" type="text" placeholder="Sharma" class="f-input" style="width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid var(--border-default); border-radius:8px; font-family:var(--font-sans); font-size:15px; background:#fff;"></div>
+          </div>
+          <div style="margin-top:16px;"><label for="namo-em" style="display:block; font-size:13px; font-weight:600; color:var(--fg-1); margin-bottom:6px;">Email address</label><input id="namo-em" type="email" placeholder="arjun@example.com" class="f-input" style="width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid var(--border-default); border-radius:8px; font-family:var(--font-sans); font-size:15px; background:#fff;"></div>
+          <div style="margin-top:16px;"><label for="namo-msg" style="display:block; font-size:13px; font-weight:600; color:var(--fg-1); margin-bottom:6px;">Message</label><textarea id="namo-msg" placeholder="Tell us how you would like to connect…" class="f-input" style="width:100%; box-sizing:border-box; min-height:120px; resize:vertical; padding:11px 13px; border:1px solid var(--border-default); border-radius:8px; font-family:var(--font-sans); font-size:15px; background:#fff;"></textarea></div>
+          <button onclick="NAMO.submitForm(event)" class="h-darken" style="margin-top:20px; display:inline-flex; align-items:center; gap:8px; font-family:var(--font-sans); font-weight:600; font-size:15px; color:#fff; background:var(--brand-purple); padding:14px 26px; border-radius:8px; border:none; cursor:pointer;">Send message</button>
+          <p style="font-size:13px; line-height:1.5; color:var(--fg-3); margin:16px 0 0;">Or email us directly at <a href="mailto:info@namoccf.org" style="color:var(--brand-purple); font-weight:600;">info@namoccf.org</a> &middot; NAMO Cancer Care Foundation (NCCF), a Section 8 company.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:var(--brand-purple); color:#fff; padding:56px 40px 28px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div class="namo-grid-footer" style="display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.18);">
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <img src="https://nbpatil0.github.io/namo/namo_logo_transparent.png" alt="NCCF" style="height:40px; width:auto;">
+            <span style="font-weight:700; font-size:15px; line-height:1.2;">NAMO Cancer Care<br>Foundation</span>
+          </div>
+          <p style="font-size:14px; line-height:1.55; color:rgba(255,255,255,0.78); max-width:300px; margin:0;">A Section 8 company registered in Ahmedabad, Gujarat, working towards holistic cancer care within reach of every citizen.</p>
+        </div>
+        <div>
+          <h5 style="font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; margin:0 0 16px;">Explore</h5>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start;">
+            <button onclick="NAMO.go('home')" class="h-white" style="background:none; border:none; padding:0; cursor:pointer; color:rgba(255,255,255,0.82); font-family:var(--font-sans); font-size:14px; text-align:left;">Home</button>
+            <button onclick="NAMO.go('about')" class="h-white" style="background:none; border:none; padding:0; cursor:pointer; color:rgba(255,255,255,0.82); font-family:var(--font-sans); font-size:14px; text-align:left;">About</button>
+            <button onclick="NAMO.go('vision')" class="h-white" style="background:none; border:none; padding:0; cursor:pointer; color:rgba(255,255,255,0.82); font-family:var(--font-sans); font-size:14px; text-align:left;">Vision</button>
+          </div>
+        </div>
+        <div>
+          <h5 style="font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; margin:0 0 16px;">Foundation</h5>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start;">
+            <button onclick="NAMO.go('team')" class="h-white" style="background:none; border:none; padding:0; cursor:pointer; color:rgba(255,255,255,0.82); font-family:var(--font-sans); font-size:14px; text-align:left;">Team &amp; Advisors</button>
+            <button onclick="NAMO.go('funders')" class="h-white" style="background:none; border:none; padding:0; cursor:pointer; color:rgba(255,255,255,0.82); font-family:var(--font-sans); font-size:14px; text-align:left;">Funders &amp; Partners</button>
+            <button onclick="NAMO.go('contact')" class="h-white" style="background:none; border:none; padding:0; cursor:pointer; color:rgba(255,255,255,0.82); font-family:var(--font-sans); font-size:14px; text-align:left;">Contact</button>
+          </div>
+        </div>
+        <div>
+          <h5 style="font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; margin:0 0 16px;">Reach us</h5>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <a href="mailto:info@namoccf.org" class="h-white" style="color:rgba(255,255,255,0.82); font-size:14px;">info@namoccf.org</a>
+            <span style="color:rgba(255,255,255,0.82); font-size:14px;">Ahmedabad, Gujarat, India</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; color:rgba(255,255,255,0.65); font-size:12px;">
+        <span>© 2026 NAMO Cancer Care Foundation (NCCF). All rights reserved. &middot; Section 8 Company, registered in Ahmedabad, Gujarat.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* =============================================================
+   NAMO site controller — replaces the Claude Design dc engine.
+   Mirrors the prototype's component logic exactly:
+   page state, scroll shadow, hash sync, nav active styles,
+   scroll-to-top on navigate, and the prototype form alert.
+   ============================================================= */
+var NAMO = (function () {
+  var PAGES = ['home', 'about', 'vision', 'team', 'funders', 'contact'];
+  var header = document.querySelector('.namo-header');
+  var current = 'home';
+
+  function setActiveNav(page) {
+    var links = document.querySelectorAll('.namo-nav-link');
+    for (var i = 0; i < links.length; i++) {
+      links[i].classList.toggle('is-active', links[i].getAttribute('data-nav') === page);
+    }
+  }
+
+  function show(page) {
+    var routes = document.querySelectorAll('.namo-route');
+    for (var i = 0; i < routes.length; i++) {
+      var on = routes[i].getAttribute('data-route') === page;
+      routes[i].classList.toggle('is-active', on);
+      if (on) {
+        var pg = routes[i].querySelector('.namo-page');
+        if (pg) { pg.style.animation = 'none'; void pg.offsetWidth; pg.style.animation = ''; }
+      }
+    }
+    setActiveNav(page);
+  }
+
+  function go(page) {
+    if (PAGES.indexOf(page) === -1) page = 'home';
+    current = page;
+    show(page);
+    try { history.replaceState(null, '', '#' + page); } catch (e) {}
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function onScroll() {
+    if (header) header.classList.toggle('is-scrolled', window.scrollY > 8);
+  }
+
+  function submitForm(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    window.alert('Prototype only — message not sent.');
+  }
+
+  function init() {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    var h = (location.hash || '').slice(1);
+    go(PAGES.indexOf(h) !== -1 ? h : 'home');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  return { go: go, submitForm: submitForm };
+})();
+</script>
+
+</body>
+</html>
